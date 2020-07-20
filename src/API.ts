@@ -19,9 +19,20 @@ export enum Difficulty {
 
 }
 
+export enum Category {
+    ENTERTAINMENT_BOOKS = 10,
+    ENTERTAINMENT_FILM = 11,
+    ENTERTAINMENT_MUSIC = 12,
+    ENTERTAINMENT_MUSICALS_THEATER = 13,
+    ENTERTAINMENT_TELEVISION = 14,
+    ENTERTAINMENT_VIDEOGAMES = 15,
+    ENTERTAINMENT_BOARDGAMES = 16,
 
-export const fetchQuizQuestions = async (amout: number, difficulty: Difficulty) => {
-    const endpoit = `https://opentdb.com/api.php?amount=${amout}&difficulty=${difficulty}&type=multiple`;
+}
+
+
+export const fetchQuizQuestions = async (amout: number, difficulty: Difficulty, category: Category) => {
+    const endpoit = `https://opentdb.com/api.php?amount=${amout}&difficulty=${difficulty}&type=multiple&category=${category}`;
 
     const data = await (await fetch(endpoit)).json();
 
