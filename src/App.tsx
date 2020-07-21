@@ -24,6 +24,9 @@ const App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [difficulty, setDifficulty] = useState('');
+  const [category, setCategory] = useState('');
+  const [totalQuestions, setTotalQuestions] = useState<number>(0);
 
 
 
@@ -33,8 +36,9 @@ const App = () => {
     setGameOver(false);
 
 
+
     try {
-      const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY, Category.ENTERTAINMENT_VIDEOGAMES);
+      const newQuestions = await fetchQuizQuestions(totalQuestions, Difficulty[difficulty], Category[category]);
       console.log(newQuestions);
       setQuestions(newQuestions);
     } catch (error) {
@@ -79,15 +83,57 @@ const App = () => {
 
   }
 
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const categorySelected = event.target.value;
+
+    console.log(categorySelected);
+    setCategory(categorySelected);
+
+  }
+
+  const handleDifficultyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const difficultySelected = event.target.value;
+
+    console.log(difficultySelected);
+    setDifficulty(difficultySelected);
+  }
+
+  const handleTotalQuestions = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const totalQuestionsSelected = Number(event.target.value);
+
+    console.log(totalQuestionsSelected);
+    setTotalQuestions(totalQuestionsSelected);
+  }
+
+
   return (
     <>
       <GlobalStyle />
       <Wrapper>
         <h1 className="title">GEEK QUIZ</h1>
         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-          <button className='start' onClick={startTrivia}>
-            Start
-          </button>
+          <>
+            <input type='number' value={totalQuestions} onChange={handleTotalQuestions}/>
+            <select id="difficulty" value={difficulty} onChange={handleDifficultyChange}>
+              <option value="EASY">Easy</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HARD">Hard</option>
+            </select>
+
+            <select id="category" value={category} onChange={handleCategoryChange}>
+              <option value="ENTERTAINMENT_BOOKS">books</option>
+              <option value="ENTERTAINMENT_FILM">film</option>
+              <option value="ENTERTAINMENT_MUSIC">music</option>
+              <option value="ENTERTAINMENT_MUSICALS_THEATER">musicals & theater</option>
+              <option value="ENTERTAINMENT_TELEVISION">television</option>
+              <option value="ENTERTAINMENT_VIDEOGAMES">videogames</option>
+              <option value="ENTERTAINMENT_COMICS">comics</option>
+              <option value="ENTERTAINMENT_ANIME_MANGA">Anime & Manga</option>
+            </select>
+            <button className='start' onClick={startTrivia}>
+              Start
+            </button>
+          </>
         ) : null
         }
 
@@ -96,7 +142,7 @@ const App = () => {
         {!loading && !gameOver && (
           <QuestionCard
             questionNumber={number + 1}
-            totalQuestions={TOTAL_QUESTIONS}
+            totalQuestions={totalQuestions}
             question={questions[number].question}
             answers={questions[number].answers}
             userAnswer={userAnswers ? userAnswers[number] : undefined}

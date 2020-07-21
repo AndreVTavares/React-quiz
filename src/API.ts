@@ -13,20 +13,22 @@ export type Question = {
 export type QuestionState = Question & { answers: string[] }
 
 export enum Difficulty {
-    EASY = 'easy',
-    MEDIUM = 'medium',
-    HARD = 'hard',
+    'EASY' = 'easy',
+    'MEDIUM' = 'medium',
+    'HARD' = 'hard',
 
 }
 
-export enum Category {
-    ENTERTAINMENT_BOOKS = 10,
-    ENTERTAINMENT_FILM = 11,
-    ENTERTAINMENT_MUSIC = 12,
-    ENTERTAINMENT_MUSICALS_THEATER = 13,
-    ENTERTAINMENT_TELEVISION = 14,
-    ENTERTAINMENT_VIDEOGAMES = 15,
-    ENTERTAINMENT_BOARDGAMES = 16,
+export enum Category{
+    'ENTERTAINMENT_BOOKS' = 10,
+    'ENTERTAINMENT_FILM' = 11,
+    'ENTERTAINMENT_MUSIC' = 12,
+    'ENTERTAINMENT_MUSICALS_THEATER' = 13,
+    'ENTERTAINMENT_TELEVISION' = 14,
+    'ENTERTAINMENT_VIDEOGAMES' = 15,
+    'ENTERTAINMENT_BOARDGAMES' = 16,
+    'ENTERTAINMENT_COMICS' = 29,
+    'ENTERTAINMENT_ANIME_MANGA' = 31,
 
 }
 
