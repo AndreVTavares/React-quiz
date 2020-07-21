@@ -7,8 +7,6 @@ import { GlobalStyle, Wrapper } from './App.styles';
 
 import QuestionCard from './components/QuestionsCard';
 
-const TOTAL_QUESTIONS = 10;
-
 export type AnswerObject = {
   question: string,
   answer: string,
@@ -75,11 +73,20 @@ const App = () => {
 
     const nextQuestion = number + 1;
 
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === totalQuestions) {
       setGameOver(true);
+      setNumber(0);
     } else {
       setNumber(nextQuestion);
     }
+
+  }
+
+  const reStart = () => {
+    setGameOver(true);
+    setScore(0);
+    setUserAnswers([])
+    setNumber(0);
 
   }
 
@@ -111,9 +118,9 @@ const App = () => {
       <GlobalStyle />
       <Wrapper>
         <h1 className="title">GEEK QUIZ</h1>
-        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+        {gameOver || userAnswers.length === totalQuestions ? (
           <>
-            <input type='number' value={totalQuestions} onChange={handleTotalQuestions}/>
+            <input type='number' value={totalQuestions} onChange={handleTotalQuestions} />
             <select id="difficulty" value={difficulty} onChange={handleDifficultyChange}>
               <option value="EASY">Easy</option>
               <option value="MEDIUM">Medium</option>
@@ -149,11 +156,12 @@ const App = () => {
             callback={checkAnswer}
           />
         )}
-        {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ?
+        {!gameOver && !loading && userAnswers.length === number + 1 && number !== totalQuestions - 1 ?
           (
             <button className="next" onClick={nextQuestion}>Next Question</button>
           ) : null
         }
+        {!loading && !gameOver && number < totalQuestions - 1 && <button className='restart' onClick={reStart}>ReStart</button>}
 
       </Wrapper>
     </>
